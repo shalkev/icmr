@@ -348,8 +348,10 @@ function loadPhase(id) {
                         <span>⬇</span> Download Original PDF
                     </a>
                 </div>
-                <div style="flex: 1; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: #fff;">
+                <div style="flex: 1; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: #fff; position: relative;">
                     <embed src="./ICMR_Implementation_and_Operation_Guide.pdf" type="application/pdf" width="100%" height="100%" />
+                    <!-- Masking watermark in bottom right corner -->
+                    <div style="position: absolute; bottom: 0; right: 10px; width: 140px; height: 40px; background: white; pointer-events: none; z-index: 10;"></div>
                     <noembed>
                         <div style="padding: 2rem; text-align: center;">
                             <p>Ihr Browser unterstützt das Einbetten von PDFs nicht.</p>
