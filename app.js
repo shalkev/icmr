@@ -505,6 +505,16 @@ function renderDashboard(container) {
 
     const transactionRows = allTransactions.map(tr => {
         const parts = tr.tcode.split(' / ');
+
+        // Sort: T-Codes first (left), Fiori Apps second (right)
+        parts.sort((a, b) => {
+            const isFioriA = a.startsWith('F') && !a.startsWith('FIN');
+            const isFioriB = b.startsWith('F') && !b.startsWith('FIN');
+            if (!isFioriA && isFioriB) return -1;
+            if (isFioriA && !isFioriB) return 1;
+            return 0;
+        });
+
         const badges = parts.map(p => {
             const isFiori = p.startsWith('F') && !p.startsWith('FIN');
             return `<span class="${isFiori ? 'badge-fiori' : 'badge-tcode'}">${isFiori ? 'App' : 'T-Code'}: ${p}</span>`;
