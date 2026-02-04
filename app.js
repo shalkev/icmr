@@ -315,6 +315,11 @@ function loadPhase(id) {
     appData.state.activePhase = id;
     renderSidebar();
 
+    // Close sidebar on mobile after selection
+    if (window.innerWidth <= 768) {
+        toggleSidebar();
+    }
+
     const phase = appData.phases.find(p => p.id === id);
     const container = document.getElementById('content-area');
 
@@ -452,6 +457,16 @@ function generatePDF() {
 
     reportContainer.innerHTML = html;
     window.print();
+}
+
+// Mobile Toggle Logic
+function toggleSidebar() {
+    const sidebar = document.querySelector('aside');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (!sidebar || !overlay) return;
+
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
 }
 
 function init() {
