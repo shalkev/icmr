@@ -123,7 +123,7 @@ const appData = {
         },
         {
             id: 8,
-            title: "Benutzerhandbuch (Tägliche Arbeit)",
+            title: "Benutzerhandbuch",
             description: "Day-to-Day Operations",
             tasks: [
                 {
