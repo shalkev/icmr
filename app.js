@@ -487,13 +487,43 @@ function renderDashboard(container) {
     const completedTasks = appData.state.completedTasks.size;
     const overallPercent = Math.round((completedTasks / totalTasks) * 100);
 
-    // Extract all T-Codes
+    // Extract all T-Codes and Fiori Apps for the table
+    const allTransactions = [];
+    appData.phases.forEach(phase => {
+        phase.tasks.forEach(task => {
+            if (task.tcode && !['Best Practice', 'Warning', 'Testing', 'Training'].includes(task.tcode)) {
+                allTransactions.push({
+                    phase: phase.title,
+                    task: task.title,
+                    tcode: task.tcode,
+                    id: task.id,
+                    phaseId: phase.id
+                });
+            }
+        });
+    });
+
+    const transactionRows = allTransactions.map(tr => {
+        const parts = tr.tcode.split(' / ');
+        const badges = parts.map(p => {
+            const isFiori = p.startsWith('F') && !p.startsWith('FIN');
+            return `<span class="${isFiori ? 'badge-fiori' : 'badge-tcode'}">${isFiori ? 'App' : 'T-Code'}: ${p}</span>`;
+        }).join(' ');
+
+        return `
+            <tr onclick="loadPhase(${tr.phaseId})" style="cursor:pointer;">
+                <td style="font-weight:600;">${tr.task}</td>
+                <td>${badges}</td>
+                <td style="color:var(--text-secondary); font-size:0.8rem;">${tr.phase}</td>
+            </tr>
+        `;
+    }).join('');
+
+    // Filter T-Codes for the cloud (unique only)
     const tCodes = new Set();
-    appData.phases.forEach(p => p.tasks.forEach(t => {
-        if (t.tcode && t.tcode !== 'Best Practice' && t.tcode !== 'Warning' && t.tcode !== 'Testing') {
-            t.tcode.split(' / ').forEach(code => tCodes.add(code.split(' ')[0]));
-        }
-    }));
+    allTransactions.forEach(tr => {
+        tr.tcode.split(' / ').forEach(code => tCodes.add(code.split(' ')[0]));
+    });
 
     const phaseCards = appData.phases.filter(p => p.id > 0 && !p.isPdf).map(p => {
         const pTotal = p.tasks.length;
@@ -537,6 +567,22 @@ function renderDashboard(container) {
                     ${Array.from(tCodes).slice(0, 15).map(code => `<span class="tcode-badge">${code}</span>`).join('')}
                     <span class="tcode-badge" style="background:var(--accent-color); color:white; border:none; cursor:pointer;" onclick="loadPhase(8)">Alle anzeigen...</span>
                 </div>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; color:var(--primary-color);">Transaktions- & App-Übersicht</h3>
+            <div class="dashboard-table-container">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Aufgabe / Aktivität</th>
+                            <th>Transaktion / Fiori App</th>
+                            <th>Phase</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${transactionRows}
+                    </tbody>
+                </table>
             </div>
 
             <h3 style="margin-bottom: 1rem; color:var(--primary-color);">Phasen Übersicht</h3>
