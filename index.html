@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICMR Implementation Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<!-- Login Overlay -->
+<div id="login-overlay">
+    <div class="login-box">
+        <h2>ICMR Hub Login</h2>
+        <p>Bitte Passwort eingeben</p>
+        <input type="password" id="password-input" placeholder="Passwort">
+        <button onclick="checkLogin()">Anmelden</button>
+        <p id="login-error" style="color: #f85149; font-size: 0.9rem; display: none; margin-top: 1rem;">Falsches
+            Passwort!</p>
+    </div>
+</div>
+
+<!-- Print Report Container (Hidden on Screen) -->
+<div id="print-report" style="display: none;"></div>
+
+<div class="app-container">
+    <aside>
+        <div class="logo">ICMR HUB</div>
+        <div id="nav-items" class="nav-list">
+            <!-- Navigation items will be injected here -->
+        </div>
+    </aside>
+
+    <main>
+        <header>
+            <div class="header-info">
+                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 4px;">S/4HANA Finance</div>
+                <div style="font-weight: 600;">Project Tracker v1.0</div>
+            </div>
+            <div class="header-actions" style="display: flex; align-items: center; gap: 2rem;">
+                <div class="progress-container">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <span>Fortschritt</span>
+                        <span id="progress-text">0% Completed</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div id="progress-bar" class="progress-bar-fill"></div>
+                    </div>
+                </div>
+                <button onclick="generatePDF()" class="print-btn">
+                    📄 Report Drucken / PDF
+                </button>
+            </div>
+        </header>
+
+        <div id="content-area" class="phase-content">
+            <!-- Content will be injected here -->
+        </div>
+    </main>
+</div>
+<script src="app.js"></script>
+</body>
+
+</html>

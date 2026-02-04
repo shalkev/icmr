@@ -1,0 +1,394 @@
+:root {
+  --primary-color: #00305e;
+  /* SAP Deep Blue */
+  --accent-color: #008fd3;
+  /* SAP Bright Blue */
+  --bg-color: #f5f7fa;
+  /* Light Grey/Blue Background */
+  --card-bg: #ffffff;
+  --text-primary: #32363a;
+  /* Dark Grey */
+  --text-secondary: #5e6977;
+  --border-color: #dbe2e8;
+  --success-color: #2b7d2b;
+  /* Green */
+  --error-color: #bb0000;
+  /* Red */
+  --font-family: '72', 'Arial', sans-serif;
+  /* SAP-like font stack */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+aside {
+  width: 280px;
+  background-color: #ffffff;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  padding: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+  border-radius: 4px;
+}
+
+.nav-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 0;
+}
+
+.nav-item {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.nav-item:hover {
+  background-color: #f0f4f8;
+  color: var(--primary-color);
+}
+
+.nav-item.active {
+  background-color: #e8f3fa;
+  color: var(--primary-color);
+  border-left-color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  /* Subtle Grid Effect from PDF */
+  background-color: #fafbfc;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-info div {
+  color: white !important;
+  /* Override inline styles */
+}
+
+/* Progress Bar */
+.progress-container {
+  width: 300px;
+}
+
+.progress-bar-bg {
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-color);
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+.print-btn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  color: white;
+}
+
+.print-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+/* Content Area */
+.phase-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+h1 {
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.phase-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+/* Task Cards */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.task-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  /* Slightly sharper corners for enterprise look */
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.task-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+}
+
+.task-card.completed {
+  background-color: #f8fff9;
+  border-color: #cceed0;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  margin-top: 4px;
+  /* Align with title */
+}
+
+.task-card.completed .checkbox {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.task-card.completed .checkbox::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 16px;
+  left: 4px;
+  top: -1px;
+}
+
+.task-text h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.t-code {
+  display: inline-block;
+  background-color: #eef5fa;
+  color: var(--primary-color);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: monospace;
+  margin-top: 0.5rem;
+  border: 1px solid #cce4f2;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+/* Login Overlay Styles */
+#login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 48, 94, 0.9);
+  /* SAP Primary Blue Overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.login-box {
+  background: var(--panel-bg);
+  padding: 2.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.login-box h2 {
+  margin-top: 0;
+  color: var(--accent-color);
+}
+
+.login-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-family: inherit;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 10px;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+/* Print Button */
+.print-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.print-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent-color);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background-color: white;
+    color: black;
+    overflow: auto;
+  }
+
+  .app-container,
+  #login-overlay {
+    display: none !important;
+  }
+
+  #print-report {
+    display: block !important;
+    padding: 2rem;
+  }
+
+  #print-report h1 {
+    font-size: 24pt;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: black;
+  }
+
+  #print-report h2 {
+    font-size: 18pt;
+    margin-top: 30px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+  }
+
+  .print-task {
+    margin-bottom: 15px;
+    padding-left: 20px;
+    border-left: 3px solid #eee;
+  }
+
+  .print-task.completed {
+    border-left-color: #3fb950;
+  }
+
+  .print-task h3 {
+    font-size: 12pt;
+    margin: 0 0 5px 0;
+  }
+
+  .print-task p {
+    font-size: 10pt;
+    color: #555;
+    margin: 0;
+  }
+
+  .print-status {
+    float: right;
+    font-weight: bold;
+    font-size: 10pt;
+  }
+}
