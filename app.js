@@ -320,13 +320,25 @@ function loadPhase(id) {
 
     if (phase.isPdf) {
         container.innerHTML = `
-            <div class="animate" style="height: 100%;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h1>${phase.title}</h1>
-                    <a href="./ICMR_Implementation_and_Operation_Guide.pdf" download class="print-btn" style="text-decoration:none; font-size:0.9rem;">⬇ Download PDF</a>
+            <div class="animate" style="height: calc(100vh - 200px); display: flex; flex-direction: column;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+                    <div>
+                        <h1 style="margin:0;">${phase.title}</h1>
+                        <p class="phase-description" style="margin:0.5rem 0 0 0;">${phase.description}</p>
+                    </div>
+                    <a href="./ICMR_Implementation_and_Operation_Guide.pdf" download class="print-btn" style="text-decoration:none; font-size:0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>⬇</span> Download Original PDF
+                    </a>
                 </div>
-                <p class="phase-description">${phase.description}</p>
-                <embed src="./ICMR_Implementation_and_Operation_Guide.pdf" type="application/pdf" width="100%" height="800px" style="border:1px solid var(--border-color); border-radius:8px;" />
+                <div style="flex: 1; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: #fff;">
+                    <embed src="./ICMR_Implementation_and_Operation_Guide.pdf" type="application/pdf" width="100%" height="100%" />
+                    <noembed>
+                        <div style="padding: 2rem; text-align: center;">
+                            <p>Ihr Browser unterstützt das Einbetten von PDFs nicht.</p>
+                            <a href="./ICMR_Implementation_and_Operation_Guide.pdf" target="_blank" class="print-btn">PDF in neuem Tab öffnen</a>
+                        </div>
+                    </noembed>
+                </div>
             </div>
         `;
         return;
