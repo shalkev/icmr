@@ -31,7 +31,7 @@ const appData = {
         },
         {
             id: 2,
-            title: "Schritt 1: Datenquelle definieren",
+            title: "Datenquelle definieren",
             description: "Definition der Datenquellen und CDS Views.",
             tasks: [
                 {
@@ -46,7 +46,7 @@ const appData = {
         },
         {
             id: 3,
-            title: "Schritt 2: Abstimmmethode definieren",
+            title: "Abstimmmethode definieren",
             description: "Konfiguriere die Logik für den Belegabgleich.",
             tasks: [
                 {
@@ -61,7 +61,7 @@ const appData = {
         },
         {
             id: 4,
-            title: "Schritt 3: Abstimmfall definieren",
+            title: "Abstimmfall definieren",
             description: "Gruppiere Handelspartner und weise Abstimmmethoden zu.",
             tasks: [
                 {
@@ -76,7 +76,7 @@ const appData = {
         },
         {
             id: 5,
-            title: "Schritt 4: Grundcodes & Buchungsvorlagen",
+            title: "Grundcodes & Buchungsvorlagen",
             description: "Behandle Differenzen mit Reason Codes und automatischer Buchungslogik.",
             tasks: [
                 {
@@ -99,7 +99,7 @@ const appData = {
         },
         {
             id: 6,
-            title: "Schritt 5: Teams und Zuständigkeiten",
+            title: "Teams und Zuständigkeiten",
             description: "Weise Benutzer spezifischen Aufgaben zu.",
             tasks: [
                 {
@@ -114,7 +114,7 @@ const appData = {
         },
         {
             id: 7,
-            title: "Schritt 6: Abstimmungsabschluss",
+            title: "Abstimmungsabschluss",
             description: "Schließe die Periode und sperre Daten.",
             tasks: [
                 {
