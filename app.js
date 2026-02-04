@@ -1,6 +1,12 @@
 const appData = {
     phases: [
         {
+            id: 0,
+            title: "Übersicht (Dashboard)",
+            description: "Zentrale Steuerung und Fortschrittsanalyse Ihres ICMR-Projekts.",
+            tasks: []
+        },
+        {
             id: 1,
             title: "Vorbereitung (Preparation)",
             description: "Aktivierung der Lösung und Zuweisung von Rollen.",
@@ -279,7 +285,7 @@ const appData = {
         }
     ],
     state: {
-        activePhase: 1,
+        activePhase: 0,
         completedTasks: new Set()
     }
 };
@@ -289,7 +295,9 @@ function renderSidebar() {
     const nav = document.getElementById('nav-items');
     nav.innerHTML = appData.phases.map(p => {
         let prefix = '';
-        if (p.isPdf) {
+        if (p.id === 0) {
+            prefix = '🏠 Hub';
+        } else if (p.isPdf) {
             prefix = 'Dokumentation';
         } else if (p.id <= 7) {
             prefix = 'Basis ' + (p.id === 1 ? '0' : p.id - 1);
@@ -322,6 +330,11 @@ function loadPhase(id) {
 
     const phase = appData.phases.find(p => p.id === id);
     const container = document.getElementById('content-area');
+
+    if (id === 0) {
+        renderDashboard(container);
+        return;
+    }
 
     if (phase.isPdf) {
         container.innerHTML = `
@@ -469,9 +482,74 @@ function toggleSidebar() {
     overlay.classList.toggle('active');
 }
 
+function renderDashboard(container) {
+    const totalTasks = appData.phases.reduce((acc, p) => acc + p.tasks.length, 0);
+    const completedTasks = appData.state.completedTasks.size;
+    const overallPercent = Math.round((completedTasks / totalTasks) * 100);
+
+    // Extract all T-Codes
+    const tCodes = new Set();
+    appData.phases.forEach(p => p.tasks.forEach(t => {
+        if (t.tcode && t.tcode !== 'Best Practice' && t.tcode !== 'Warning' && t.tcode !== 'Testing') {
+            t.tcode.split(' / ').forEach(code => tCodes.add(code.split(' ')[0]));
+        }
+    }));
+
+    const phaseCards = appData.phases.filter(p => p.id > 0 && !p.isPdf).map(p => {
+        const pTotal = p.tasks.length;
+        const pDone = p.tasks.filter(t => appData.state.completedTasks.has(t.id)).length;
+        const pPercent = Math.round((pDone / pTotal) * 100);
+
+        return `
+            <div class="phase-mini-card" onclick="loadPhase(${p.id})">
+                <div style="display:flex; justify-content:space-between; align-items:start;">
+                    <h3>${p.title}</h3>
+                    <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary);">${pPercent}%</span>
+                </div>
+                <div class="mini-progress-bar">
+                    <div class="mini-progress-fill" style="width: ${pPercent}%"></div>
+                </div>
+                <p style="font-size:0.8rem; color:var(--text-secondary); margin:0;">${pDone} von ${pTotal} Aufgaben erledigt</p>
+            </div>
+        `;
+    }).join('');
+
+    container.innerHTML = `
+        <div class="animate">
+            <h1 style="margin-bottom: 2rem;">Projekt Dashboard</h1>
+            
+            <div class="dashboard-grid">
+                <div class="kpi-card">
+                    <h4>Gesamtfortschritt</h4>
+                    <div class="kpi-value">${overallPercent}%</div>
+                    <p style="font-size:0.85rem; color:var(--text-secondary); margin:0;">Status der Implementierung</p>
+                </div>
+                <div class="kpi-card">
+                    <h4>Erledigte Aufgaben</h4>
+                    <div class="kpi-value">${completedTasks} / ${totalTasks}</div>
+                    <p style="font-size:0.85rem; color:var(--text-secondary); margin:0;">Aktueller Workload</p>
+                </div>
+            </div>
+
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+                <h3 style="margin-top:0; color:var(--primary-color);">Zentrale T-Codes & Apps</h3>
+                <div class="tcode-cloud">
+                    ${Array.from(tCodes).slice(0, 15).map(code => `<span class="tcode-badge">${code}</span>`).join('')}
+                    <span class="tcode-badge" style="background:var(--accent-color); color:white; border:none; cursor:pointer;" onclick="loadPhase(8)">Alle anzeigen...</span>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; color:var(--primary-color);">Phasen Übersicht</h3>
+            <div class="phase-summary-grid">
+                ${phaseCards}
+            </div>
+        </div>
+    `;
+}
+
 function init() {
     renderSidebar();
-    loadPhase(1);
+    loadPhase(0); // Start on Dashboard
     updateProgress();
 
     // Allow login with Enter key
