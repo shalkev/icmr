@@ -348,10 +348,8 @@ function loadPhase(id) {
                         <span>⬇</span> Download Original PDF
                     </a>
                 </div>
-                <div style="flex: 1; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: #fff; position: relative;">
+                <div style="flex: 1; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: #fff;">
                     <embed src="./ICMR_Implementation_and_Operation_Guide.pdf" type="application/pdf" width="100%" height="100%" />
-                    <!-- Subtles Vertuschen des NotebookLM Logos in der Ecke -->
-                    <div style="position: absolute; bottom: 8px; right: 12px; width: 110px; height: 30px; background: white; pointer-events: none; z-index: 10; border-radius: 2px;"></div>
                     <noembed>
                         <div style="padding: 2rem; text-align: center;">
                             <p>Ihr Browser unterstützt das Einbetten von PDFs nicht.</p>
